@@ -1,0 +1,13 @@
+{
+  "storage": {
+    "database": {
+      "url": "",
+      "type": "postgres",
+      "host": "localhost",
+      "port": 5432,
+      "database": "keliarAcademy",
+      "username": "postgres",
+      "password": "280201"
+    }
+  }
+}

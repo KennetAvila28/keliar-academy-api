@@ -1,0 +1,148 @@
+{
+	"basePath": "/api/v1",
+	"consumes": [
+		"application/json"
+	],
+	"definitions": {
+		"UserCreationParams": {
+			"properties": {
+				"password": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"lastNames": {
+					"type": "string"
+				},
+				"names": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"password",
+				"email",
+				"lastNames",
+				"names"
+			],
+			"type": "object"
+		}
+	},
+	"info": {
+		"title": "keliar_academy_api",
+		"version": "1.0.0",
+		"description": "backend services to keliar academy",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "KennetAvila28"
+		}
+	},
+	"paths": {
+		"/auth": {
+			"get": {
+				"operationId": "Get",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"tags": [
+					"auth"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "Get",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Returns Users Collection",
+						"schema": {
+							"items": {
+								"additionalProperties": true
+							},
+							"type": "array"
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Post",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Created"
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "request",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UserCreationParams"
+						}
+					}
+				]
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Returns User who matches the id",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		}
+	},
+	"produces": [
+		"application/json"
+	],
+	"swagger": "2.0",
+	"securityDefinitions": {},
+	"host": "localhost:5000"
+}

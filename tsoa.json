@@ -1,0 +1,18 @@
+{
+  "entryFile": "./src/index.ts",
+  "noImplicitAdditionalProperties": "silently-remove-extras",
+  "spec": {
+    "outputDirectory": "./build",
+    "entryFile": "./src/app/routes",
+    "host": "localhost:5000",
+    "basePath": "/api/v1",
+    "specVersion": 2
+  },
+  "routes": {
+    "entryFile": "./src/app/controllers/index.ts",
+    "routesDir": "./src/app/routes",
+    "basePath": "/api/v1",
+    "middleware": "express",
+    "iocModule": "./src/app/ioc/ioc"
+  }
+}
