@@ -4,22 +4,18 @@
  * 
  */
 import { ValueObject } from '../../../shared/domain/valueobjects/ValueObject'
-import { EMAIL_REGEX, NAME_REGEX, PASSWORD_REGEX } from '../../../../app/utils/constants'
+import { NAME_REGEX } from '../../../../app/utils/constants'
 import bcrypt from 'bcryptjs'
+import { Either, right } from '../../../shared/core/Either'
+import { validateEmailPattern, validateMaxStringLength, validateMinStringLength, validateStringMatchPattern } from '../../../shared/domain/valueobjects/ValueObjectsValidators'
 /**
  * @description class to validate User Emaill 
  */
 class UserEmail extends ValueObject<string> {
+  _value: Either<string, string>
   constructor(value: string) {
-    super(value)
-    this.validateEmail(value)
-  }
-
-  validateEmail(value: string) {
-    const regex = new RegExp(EMAIL_REGEX)
-    if (regex.test(value)) {
-      throw Error('Invalid email structure, must be a valid email address')
-    }
+    super()
+    this._value = validateEmailPattern(value)
   }
 }
 
@@ -27,50 +23,40 @@ class UserEmail extends ValueObject<string> {
  * @description class to validate User Name
  */
 class UserName extends ValueObject<string> {
+  _value: Either<string, string>
+
   constructor(value: string) {
-    super(value)
-    this.validateName(value)
+    super()
+    this._value = validateStringMatchPattern(value, NAME_REGEX)
+    this._value = validateMinStringLength(value, 3)
+    this._value = validateMaxStringLength(value, 150)
   }
-  validateName(value: string){
-    const regex = new RegExp(NAME_REGEX)
-    if (!regex.test(value)) {
-      throw Error('Invalid name structure, must be a valid name')
-    }
-  }
+
 }
 
 /**
  * @description class to validate User Password
  */
 class UserPassword extends ValueObject<string> {
+  _value: Either<string, string>
   constructor(value: string) {
-    super(setPassword(value))
-    this.validateLenght(value)
-    this.validateStructure(value)
-    
+    super()
+    this._value = validateMinStringLength(value, 8)
+    this._value = validateMaxStringLength(value, 12)
+    this._value = this.encrypt(value)
   }
 
-  validateLenght(value: string): void {
-    if (value.length < 8) {
-      throw Error('Invalid password length most be greater than 8')
-    }
-    if (value.length > 12) {
-      throw Error('Invalid password length most be less or equal than 12')
-    }
+  encrypt(value: string): Either<string, string> {
+    const salt = bcrypt.genSaltSync(10)
+    const hash = bcrypt.hashSync(value, salt)
+    return right(hash)
   }
 
-  validateStructure(value: string): void {
-    const regular = new RegExp(PASSWORD_REGEX)
-    if (regular.test(value)) {
-      throw Error('Invalid password structure, must be a valid password')
-    }
+  compare(value: string, hash: string): boolean {
+    return bcrypt.compareSync(value, hash)
   }
 }
 
-function setPassword(password:string):string {
-  const salt =  bcrypt.genSaltSync(10)
-   return bcrypt.hashSync(password, salt)
-}
 //TODO: Add more attributtes to this entity
 
 export { UserEmail, UserName, UserPassword }

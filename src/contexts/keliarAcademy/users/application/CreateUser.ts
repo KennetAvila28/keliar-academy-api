@@ -8,28 +8,25 @@ import { User } from '../domain/User'
 import { UserRepository } from '../domain/UserRepository'
 import { UserEmail, UserName, UserPassword } from '../domain/UserValueObjects'
 import { v4 } from 'uuid'
-import { UserCreationParams } from '../domain/UserRequest'
-import { fold } from '../../../shared/core/Either'
+import { UserCreationParams, UserResponseModel } from '../domain/UserRequest'
+import { Either, fold, getOrElse } from '../../../shared/core/Either'
+import { UserFailure } from '../domain/UserFailures'
 
 export class CreateUser {
   static async run(
     request: UserCreationParams,
     repository: UserRepository
-  ): Promise<void> {
-    const user = User.create(
-      new UniqueId(v4()),
-      new UserName(request.names),
-      new UserName(request.lastNames),
-      new UserEmail(request.email),
-      new UserPassword(request.password)
-    )
+  ): Promise<any> {
+    const user = User.create(request)
     const result = await repository.save(user)
-    fold(
+    return fold<UserFailure, User, any>(
       result,
       (err) => {
-        throw new Error(err)
+        return new Error(err)
       },
-      (user) => {}
+      (user: User) => {
+        return user.toPrimitives()
+      }
     )
   }
 }

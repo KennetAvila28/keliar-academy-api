@@ -5,7 +5,7 @@ import { UserRepository } from '../domain/UserRepository'
 import { UserCreationParams } from '../domain/UserRequest'
 import { CreateUser } from './CreateUser'
 import { GetById } from './GetBydId'
-import { GetUsers } from './GetUser'
+import { GetUsers } from './GetUsers'
 
 @injectable()
 export class UserService {
@@ -23,7 +23,7 @@ export class UserService {
     return await GetById.run(id, this.repository)
   }
 
-  async createUser(userRequest: UserCreationParams): Promise<void> {
-    await CreateUser.run(userRequest, this.repository)
+  async createUser(userRequest: UserCreationParams): Promise<any> {
+   return await CreateUser.run(userRequest, this.repository)
   }
 }

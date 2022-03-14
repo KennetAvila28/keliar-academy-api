@@ -1,37 +1,40 @@
 /**
  * @description Base inmutable object class
- * @author Kennet Avila
+ * @author Luis Palma
  */
 
-export abstract class ValueObject<T> {
-  readonly _value: T
+ import { Either, getOrElse, isRight } from '../../core/Either'
 
-  constructor(value: T) {
-    this._value = value
-  }
-
-  /**
-   * Return the value of the valueobject
-   * @returns Returns the primitive value
-   */
-  get(): T {
-    return this._value
-  }
-
-  /**
-   * Compare the ValueObject with other
-   * @param otherValue ValueObject to compare
-   * @returns Returns true if the objects has the same value
-   */
-  // sameAs(otherValue: ValueObject<T>): boolean {
-  //   return this._value === otherValue.get()
-  // }
-
-  private onLeft(value: T): T {
-    throw new Error(`Unexpected with value ${value}`)
-  }
-
-  private onRight(value: T): T {
-    return value
-  }
-}
+ export abstract class ValueObject<T> {
+   abstract readonly _value: Either<T, T>
+ 
+   isValid(): boolean {
+     return isRight(this._value)
+   }
+ 
+   /**
+    * Return the value of the valueobject
+    * @returns Returns the primitive value
+    */
+   get(): T {
+     return getOrElse(this._value, this.onLeft)
+   }
+ 
+   /**
+    * Compare the ValueObject with other
+    * @param otherValue ValueObject to compare
+    * @returns Returns true if the objects has the same value
+    */
+   // sameAs(otherValue: ValueObject<T>): boolean {
+   //   return this._value === otherValue.get()
+   // }
+ 
+   /**
+    *
+    * @param value
+    */
+   private onLeft(value: T): T {
+     throw new Error(`${value}`)
+   }
+ }
+ 

@@ -14,8 +14,16 @@ import * as express from 'express';
 
 const models: TsoaRoute.Models = {
     "UserCreationParams": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"password":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"lastNames":{"dataType":"string","required":true},"names":{"dataType":"string","required":true}},"validators":{}},
+        "dataType": "refObject",
+        "properties": {
+            "names": {"dataType":"string","required":true},
+            "lastNames": {"dataType":"string","required":true},
+            "phone": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "photo": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };

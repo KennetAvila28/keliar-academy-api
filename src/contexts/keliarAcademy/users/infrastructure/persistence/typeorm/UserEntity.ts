@@ -14,14 +14,19 @@ export const UserEntity = new EntitySchema<User>({
       primary: true,
       transformer: TypeOrmTransformer(UniqueId),
     },
-    names: {
+    names:{
       type: String,
-      transformer: TypeOrmTransformer(UserName)
+      length: 150
     },
-    lastNames: {
+    lastNames:{
       type: String,
-      transformer: TypeOrmTransformer(UserName)
+      length: 150
     },
+    phone:{
+      type: String,
+      length: 15
+    },
+
     email: {
       type: String,
       transformer: TypeOrmTransformer(UserEmail),
@@ -35,6 +40,18 @@ export const UserEntity = new EntitySchema<User>({
       type: Date,
       nullable: true,
     },
+    isActive:{
+      type:Boolean,
+      default: true
+    },
+    isArchived:{
+      type:Boolean,
+      default: false
+    },
+    photo:{
+      type: String,
+      nullable:true
+    }
   },
 
 })

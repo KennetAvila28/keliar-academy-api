@@ -36,6 +36,6 @@ export class UserController {
   @Post()
   @SuccessResponse('201', 'Created')
   public async post(@Body() request: UserCreationParams): Promise<void> {
-    await this.userService.createUser(request)
+    return await this.userService.createUser(request)
   }
 }
