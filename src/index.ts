@@ -7,8 +7,8 @@
 import { Application } from './app/app'
 
 try {
-  new Application().start()
+  new Application().start();
 } catch (e) {
-  console.log(e)
-  process.exit(1)
+  console.log(e);
+  process.exit(1);
 }

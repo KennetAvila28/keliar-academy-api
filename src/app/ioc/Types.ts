@@ -22,6 +22,14 @@ export const TYPE = {
       },
       Repository: Symbol('UserRepository'),
     },
+    Role: {
+      Application: {
+        Service: Symbol('RoleService'),
+        Controller: Symbol('RoleController'),
+      },
+      Repository: Symbol('RoleRepository'),
+    },
+
   },
   Services: {},
 }

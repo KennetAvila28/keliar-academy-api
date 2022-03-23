@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.1] - 2022-03-14
+### Added
+- Add SetActiveUser method
+- Add User Filters
 ## [1.0.0] - 2022-03-12
 ### Added
 - New name regex expressison

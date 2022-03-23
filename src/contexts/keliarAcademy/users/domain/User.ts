@@ -10,16 +10,16 @@ import { UniqueId } from '../../../shared/domain/valueobjects/UniqueId'
 import { UserCreationParams } from './UserRequest'
 import { UserEmail, UserName, UserPassword } from './UserValueObjects'
 export class User implements BaseEntity {
-  readonly _id: UniqueId
-  readonly email: UserEmail
-  readonly password: UserPassword
-  readonly names: string
-  readonly lastNames: string
-  readonly phone: string
-  readonly photo: string
-  readonly isActive:boolean
-  readonly isArchived:boolean
-  readonly createdAt: Date
+  readonly _id: UniqueId;
+  readonly email: UserEmail;
+  readonly password: UserPassword;
+  readonly names: string;
+  readonly lastNames: string;
+  readonly phone: string;
+  readonly photo: string;
+  readonly isActive:boolean;
+  readonly isArchived:boolean;
+  readonly createdAt: Date;
 
   constructor(
     id: UniqueId,
@@ -30,16 +30,16 @@ export class User implements BaseEntity {
     phone: string,
     photo: string
   ) {
-    this._id = id
-    this.email = email
-    this.password = password
-    this.createdAt = new Date()
-    this.isActive = true
-    this.isArchived = false
-    this.names = names
-    this.lastNames = lastNames
-    this.phone = phone
-    this.photo = photo
+    this._id = id;
+    this.email = email;
+    this.password = password;
+    this.createdAt = new Date();
+    this.isActive = true;
+    this.isArchived = false;
+    this.names = names;
+    this.lastNames = lastNames;
+    this.phone = phone;
+    this.photo = photo;
   }
 
   /**
@@ -54,8 +54,10 @@ export class User implements BaseEntity {
       user.names, 
       user.lastNames,
       user.phone,
-      user.photo)
+      user.photo);
   }
+
+
 
   toPrimitives(): any {
     return {
@@ -68,7 +70,7 @@ export class User implements BaseEntity {
       isActive: this.isActive,
       isArchived: this.isArchived,
       createdAt: this.createdAt,
-    }
+    };
   }
 
 }

@@ -17,16 +17,16 @@ export class CreateUser {
     request: UserCreationParams,
     repository: UserRepository
   ): Promise<any> {
-    const user = User.create(request)
-    const result = await repository.save(user)
+    const user = User.create(request);
+    const result = await repository.save(user);
     return fold<UserFailure, User, any>(
       result,
       (err) => {
-        return new Error(err)
+        throw new Error(err);
       },
       (user: User) => {
-        return user.toPrimitives()
+        return user.toPrimitives();
       }
-    )
+    );
   }
 }

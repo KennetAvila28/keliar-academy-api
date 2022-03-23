@@ -9,8 +9,8 @@ export function validateMaxStringLength(
   input: string,
   length: number
 ): Either<string, string> {
-  if (input.length <= length) return right(input)
-  return left('MAX_LENGTH_ERROR')
+  if (input.length <= length) return right(input);
+  return left('MAX_LENGTH_ERROR');
 }
 
 /**
@@ -21,8 +21,8 @@ export function validateMinStringLength(
   input: string,
   length: number
 ): Either<string, string> {
-  if (input.length >= length) return right(input)
-  return left('MIN_LENGTH_ERROR')
+  if (input.length >= length) return right(input);
+  return left('MIN_LENGTH_ERROR');
 }
 
 /**
@@ -30,8 +30,8 @@ export function validateMinStringLength(
  * @param input
  */
 export function validateStringNotEmpty(input: string): Either<string, string> {
-  if (input === '') return left('VALUE_EMPTY_ERROR')
-  return right(input)
+  if (input === '') return left('VALUE_EMPTY_ERROR');
+  return right(input);
 }
 
 /**
@@ -44,8 +44,8 @@ export function validateStringMatchPattern(
   input: string,
   pattern: RegExp
 ): Either<string, string> {
-  if (input.match(pattern)) return right(input)
-  return left('TEXT_FORMAT_ERROR')
+  if (input.match(pattern)) return right(input);
+  return left('TEXT_FORMAT_ERROR');
 }
 
 /**
@@ -56,6 +56,6 @@ export function validateStringMatchPattern(
 export function validateEmailPattern(input: string) {
   
     
-  if (input.match(EMAIL_REGEX)) return right(input)
-  return left('EMAIL_FORMAT_ERROR')
+  if (input.match(EMAIL_REGEX)) return right(input);
+  return left('EMAIL_FORMAT_ERROR');
 }

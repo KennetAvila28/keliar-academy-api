@@ -1,4 +1,4 @@
 export type AuthRequest = {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }

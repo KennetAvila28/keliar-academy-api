@@ -6,16 +6,16 @@
  * `Left` is used for failure.
  */
 export interface Left<E> {
-  readonly _tag: 'Left'
-  readonly left: E
+  readonly _tag: 'Left';
+  readonly left: E;
 }
 
 /**
  * `Right` is used for success.
  */
 export interface Right<A> {
-  readonly _tag: 'Right'
-  readonly right: A
+  readonly _tag: 'Right';
+  readonly right: A;
 }
 
 /**
@@ -30,8 +30,8 @@ export type Either<E, A> = Left<E> | Right<A>
  * @returns
  */
 export const isLeft = <E, A>(ma: Either<E, A>) => {
-  return ma._tag === 'Left'
-}
+  return ma._tag === 'Left';
+};
 
 /**
  * Returns `true` if the either is an instance of `Right`, `false` otherwise.
@@ -39,8 +39,8 @@ export const isLeft = <E, A>(ma: Either<E, A>) => {
  * @returns
  */
 export const isRight = <E, A>(ma: Either<E, A>) => {
-  return ma._tag === 'Right'
-}
+  return ma._tag === 'Right';
+};
 
 /**
  * Constructs a new `Either` holding a `Left` value. This usually represents a failure
@@ -48,8 +48,8 @@ export const isRight = <E, A>(ma: Either<E, A>) => {
  * @returns
  */
 export const left = <E = never, A = never>(e: E): Either<E, A> => {
-  return { _tag: 'Left', left: e }
-}
+  return { _tag: 'Left', left: e };
+};
 
 /**
  * Constructs a new `Either` holding a `Right` value. This usually represents a successful value
@@ -57,8 +57,8 @@ export const left = <E = never, A = never>(e: E): Either<E, A> => {
  * @returns
  */
 export const right = <E = never, A = never>(a: A): Either<E, A> => {
-  return { _tag: 'Right', right: a }
-}
+  return { _tag: 'Right', right: a };
+};
 
 /**
  * Takes two functions and an `Either` value, if the value is a `Left` the inner value is applied to the first function,
@@ -75,7 +75,7 @@ export function fold<E, A, B>(
 ): B {
   return isLeft(either)
     ? onLeft((either as Left<E>).left)
-    : onRight((either as Right<A>).right)
+    : onRight((either as Right<A>).right);
 }
 
 /**
@@ -87,5 +87,5 @@ export function fold<E, A, B>(
 export function getOrElse<E, A>(either: Either<E, A>, onLeft: (e: E) => A): A {
   return isLeft(either)
     ? onLeft((either as Left<E>).left)
-    : (either as Right<A>).right
+    : (either as Right<A>).right;
 }

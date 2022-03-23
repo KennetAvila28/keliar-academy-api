@@ -35,6 +35,118 @@
 			],
 			"type": "object",
 			"additionalProperties": false
+		},
+		"UserUpdateParams": {
+			"properties": {
+				"names": {
+					"type": "string"
+				},
+				"lastNames": {
+					"type": "string"
+				},
+				"phone": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"photo": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"names",
+				"lastNames",
+				"phone",
+				"email",
+				"photo"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"UserActiveParams": {
+			"properties": {
+				"isActive": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"isActive"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"UserArchivedParams": {
+			"properties": {
+				"isArchived": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"isArchived"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"UserPasswordUpdateParams": {
+			"properties": {
+				"password": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"password"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"RoleCreationParams": {
+			"properties": {
+				"name": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"name"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"RoleUpdateParams": {
+			"properties": {
+				"name": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"name"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"RoleActiveParams": {
+			"properties": {
+				"isActive": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"isActive"
+			],
+			"type": "object",
+			"additionalProperties": false
+		},
+		"RoleArchivedParams": {
+			"properties": {
+				"isArchived": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"isArchived"
+			],
+			"type": "object",
+			"additionalProperties": false
 		}
 	},
 	"info": {
@@ -91,7 +203,26 @@
 					"Users"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "names",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "lastNames",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "isActive",
+						"required": false,
+						"type": "boolean"
+					}
+				]
 			},
 			"post": {
 				"operationId": "Post",
@@ -100,7 +231,10 @@
 				],
 				"responses": {
 					"201": {
-						"description": "Created"
+						"description": "Created",
+						"schema": {
+							"additionalProperties": true
+						}
 					}
 				},
 				"tags": [
@@ -115,6 +249,49 @@
 						"schema": {
 							"$ref": "#/definitions/UserCreationParams"
 						}
+					}
+				]
+			}
+		},
+		"/users/archived": {
+			"get": {
+				"operationId": "GetArchived",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Returns Archived Users Collection",
+						"schema": {
+							"items": {
+								"additionalProperties": true
+							},
+							"type": "array"
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "names",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "lastNames",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "isActive",
+						"required": false,
+						"type": "boolean"
 					}
 				]
 			}
@@ -143,6 +320,372 @@
 						"name": "id",
 						"required": true,
 						"type": "string"
+					}
+				]
+			},
+			"put": {
+				"operationId": "Put",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Updated",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "user",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UserUpdateParams"
+						}
+					}
+				]
+			}
+		},
+		"/users/{id}/set-active": {
+			"patch": {
+				"operationId": "SetActiveUser",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "User Change Active",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "active",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UserActiveParams"
+						}
+					}
+				]
+			}
+		},
+		"/users/{id}/set-archived": {
+			"patch": {
+				"operationId": "SetArchivedUser",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "User Change Archived",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "archived",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UserArchivedParams"
+						}
+					}
+				]
+			}
+		},
+		"/users/{id}/change-password": {
+			"patch": {
+				"operationId": "ChangePassword",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Updated User Password",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "passUser",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UserPasswordUpdateParams"
+						}
+					}
+				]
+			}
+		},
+		"/roles": {
+			"get": {
+				"operationId": "Get",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Returns Roles Collection",
+						"schema": {
+							"items": {
+								"additionalProperties": true
+							},
+							"type": "array"
+						}
+					}
+				},
+				"tags": [
+					"Roles"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"type": "string"
+					}
+				]
+			},
+			"post": {
+				"operationId": "Post",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Created",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Roles"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "request",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/RoleCreationParams"
+						}
+					}
+				]
+			}
+		},
+		"/roles/archived": {
+			"get": {
+				"operationId": "GetArchived",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Returns Archived Roles Collection",
+						"schema": {
+							"items": {
+								"additionalProperties": true
+							},
+							"type": "array"
+						}
+					}
+				},
+				"tags": [
+					"Roles"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/roles/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Returns Role who matches the id",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Roles"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			},
+			"put": {
+				"operationId": "Put",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Updated",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Roles"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "role",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/RoleUpdateParams"
+						}
+					}
+				]
+			}
+		},
+		"/roles/{id}/set-active": {
+			"patch": {
+				"operationId": "SetActiveRole",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Role Change Active",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Roles"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "active",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/RoleActiveParams"
+						}
+					}
+				]
+			}
+		},
+		"/roles/{id}/set-archived": {
+			"patch": {
+				"operationId": "SetArchivedRole",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Role Change Archived",
+						"schema": {
+							"additionalProperties": true
+						}
+					}
+				},
+				"tags": [
+					"Roles"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "archived",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/RoleArchivedParams"
+						}
 					}
 				]
 			}

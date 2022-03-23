@@ -11,14 +11,14 @@ import { UserRepository } from '../domain/UserRepository'
 
 export class GetById {
   static async run(id: UniqueId, repository: UserRepository): Promise<any> {
-    const result = await repository.searchById(id)
+    const result = await repository.searchById(id);
 
     return fold<UserFailure, User, any>(
       result,
       (error) => {
-        throw new Error(error)
+        throw new Error(error);
       },
       (user) => user.toPrimitives()
-    )
+    );
   }
 }

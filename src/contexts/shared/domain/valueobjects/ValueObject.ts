@@ -6,10 +6,10 @@
  import { Either, getOrElse, isRight } from '../../core/Either'
 
  export abstract class ValueObject<T> {
-   abstract readonly _value: Either<T, T>
- 
+   abstract readonly _value: Either<T, T>;
+
    isValid(): boolean {
-     return isRight(this._value)
+     return isRight(this._value);
    }
  
    /**
@@ -17,7 +17,7 @@
     * @returns Returns the primitive value
     */
    get(): T {
-     return getOrElse(this._value, this.onLeft)
+     return getOrElse(this._value, this.onLeft);
    }
  
    /**
@@ -34,7 +34,6 @@
     * @param value
     */
    private onLeft(value: T): T {
-     throw new Error(`${value}`)
+     throw new Error(`${value}`);
    }
  }
- 
