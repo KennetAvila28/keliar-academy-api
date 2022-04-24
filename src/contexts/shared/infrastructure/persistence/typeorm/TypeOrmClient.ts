@@ -3,10 +3,10 @@
  */
 import { createConnection } from 'typeorm'
 import { TypeOrmConfig } from './TypeOrmConfig'
-import { TypeOrmEntities } from './TypeOrmEntities';
+import { TypeOrmEntities } from './TypeOrmEntities'
 export class TypeOrmClient {
   async getTypeOrmConnection() {
-    const config = new TypeOrmConfig();
+    const config = new TypeOrmConfig()
 
     return await createConnection({
       type: config.type,
@@ -19,8 +19,8 @@ export class TypeOrmClient {
       entities: TypeOrmEntities,
       synchronize: true,
       extra: {
-        ssl:false
+        ssl: false,
       },
-    });
+    })
   }
 }

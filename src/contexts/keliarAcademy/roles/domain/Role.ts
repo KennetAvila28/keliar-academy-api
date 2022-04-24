@@ -1,28 +1,24 @@
-/**
- * @description Roles entity class
- * @author Kennet Avila
- */
-
-import { v4 } from 'uuid'
+import { Either, left, right } from '../../../shared/core/Either'
 import { BaseEntity } from '../../../shared/domain/BaseEntity'
 import { UniqueId } from '../../../shared/domain/valueobjects/UniqueId'
-import { RoleCreationParams } from './RoleRequest'
+import { Permission } from '../../permissions/domain/Permission'
+import { RoleFailure } from './RoleFailures'
+import { RoleResponseModel } from './RoleRequest'
 export class Role implements BaseEntity {
-  readonly _id: UniqueId;
-  readonly name: string;
-  readonly isActive:boolean;
-  readonly isArchived:boolean;
-  readonly createdAt: Date;
+  readonly _id: string
+  readonly name: string
+  readonly isActive: boolean
+  readonly isArchived: boolean
+  readonly createdAt: Date
+  readonly permissions: Permission[]
 
-  constructor(
-    id: UniqueId,
-    name: string,
-  ) {
-    this._id = id;
-    this.createdAt = new Date();
-    this.isActive = true;
-    this.isArchived = false;
-    this.name = name;
+  constructor(id: string, name: string, permissions: Permission[]) {
+    this._id = id
+    this.createdAt = new Date()
+    this.isActive = true
+    this.isArchived = false
+    this.name = name
+    this.permissions = permissions
   }
 
   /**
@@ -30,24 +26,29 @@ export class Role implements BaseEntity {
    * @param {RoleCreationParams} role
    * @returns {Role} A new instances of a Role entity
    */
-  static create(role: RoleCreationParams): Role {
-    return new Role(new UniqueId(v4()),
-      role.name);
+  static create(
+    id: UniqueId,
+    name: string,
+    permissions: Permission[]
+  ): Either<RoleFailure, Role> {
+    if (!id.isValid()) return left('INVALID_ROLE_ID')
+    const role = new Role(id.get(), name, permissions)
+    return right(role)
   }
 
-
-
-  toPrimitives(): any {
+  toPrimitives(): RoleResponseModel {
     return {
-      _id: this._id.get(),
+      _id: this._id,
       name: this.name,
       isActive: this.isActive,
       isArchived: this.isArchived,
       createdAt: this.createdAt,
-    };
+      permissions: this.permissions
+        ? this.permissions.map((p) => p.toPrimitives())
+        : [],
+    }
   }
-
 }
-  // toString(): string {
-  //   return `id: ${this._id.get()}, name: ${this.name.get()}, email: ${this.email.get()}`
-  // }
+// toString(): string {
+//   return `id: ${this._id.get()}, name: ${this.name.get()}, email: ${this.email.get()}`
+// }

@@ -1,5 +1,4 @@
 export interface RoleFilterRequest {
-    name?: string,
-    lastNames?: string,
-    isActive?: boolean,
+  name?: string
+  isActive?: boolean
 }

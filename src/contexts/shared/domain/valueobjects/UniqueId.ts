@@ -3,17 +3,17 @@ import { ValueObject } from './ValueObject'
 import { validate } from 'uuid'
 
 export class UniqueId extends ValueObject<string> {
-  _value: Either<string, string>;
+  _value: Either<string, string>
 
   constructor(value: string) {
-    super();
-    this._value = this.validateUUID(value);
+    super()
+    this._value = this.validateUUID(value)
   }
 
   validateUUID(value: string): Either<string, string> {
     if (!validate(value)) {
-      return left('INVALID_ID');
+      return left('INVALID_ID')
     }
-    return right(value);
+    return right(value)
   }
 }

@@ -1,152 +1,390 @@
 {
-	"basePath": "/api/v1",
-	"consumes": [
-		"application/json"
-	],
-	"definitions": {
-		"UserCreationParams": {
-			"properties": {
-				"names": {
-					"type": "string"
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"JWToken": {
+				"properties": {
+					"token": {
+						"type": "string"
+					}
 				},
-				"lastNames": {
-					"type": "string"
-				},
-				"phone": {
-					"type": "string"
-				},
-				"email": {
-					"type": "string"
-				},
-				"password": {
-					"type": "string"
-				},
-				"photo": {
-					"type": "string"
-				}
+				"required": [
+					"token"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
-			"required": [
-				"names",
-				"lastNames",
-				"phone",
-				"email",
-				"password",
-				"photo"
-			],
-			"type": "object",
-			"additionalProperties": false
+			"AuthParams": {
+				"properties": {
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password",
+					"email"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PermissionResponseModel": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"module": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"description",
+					"module"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RoleResponseModel": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/PermissionResponseModel"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"isActive",
+					"isArchived",
+					"createdAt",
+					"permissions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserResponseModel": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"roles": {
+						"items": {
+							"$ref": "#/components/schemas/RoleResponseModel"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"names",
+					"lastNames",
+					"email",
+					"photo",
+					"phone",
+					"isActive",
+					"isArchived",
+					"createdAt",
+					"roles"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Permission": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"module": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"description",
+					"module"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Role": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"isActive",
+					"isArchived",
+					"createdAt",
+					"permissions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserCreationParams": {
+				"properties": {
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"roles": {
+						"items": {
+							"$ref": "#/components/schemas/Role"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"names",
+					"lastNames",
+					"phone",
+					"email",
+					"password",
+					"photo",
+					"roles"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserUpdateParams": {
+				"properties": {
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"roles": {
+						"items": {
+							"$ref": "#/components/schemas/Role"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"names",
+					"lastNames",
+					"phone",
+					"email",
+					"photo",
+					"roles"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserActiveParams": {
+				"properties": {
+					"isActive": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"isActive"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserArchivedParams": {
+				"properties": {
+					"isArchived": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"isArchived"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserPasswordUpdateParams": {
+				"properties": {
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RoleCreationParams": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"permissions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RoleUpdateParams": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"permissions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RoleActiveParams": {
+				"properties": {
+					"isActive": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"isActive"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RoleArchivedParams": {
+				"properties": {
+					"isArchived": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"isArchived"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
 		},
-		"UserUpdateParams": {
-			"properties": {
-				"names": {
-					"type": "string"
-				},
-				"lastNames": {
-					"type": "string"
-				},
-				"phone": {
-					"type": "string"
-				},
-				"email": {
-					"type": "string"
-				},
-				"photo": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"names",
-				"lastNames",
-				"phone",
-				"email",
-				"photo"
-			],
-			"type": "object",
-			"additionalProperties": false
-		},
-		"UserActiveParams": {
-			"properties": {
-				"isActive": {
-					"type": "boolean"
-				}
-			},
-			"required": [
-				"isActive"
-			],
-			"type": "object",
-			"additionalProperties": false
-		},
-		"UserArchivedParams": {
-			"properties": {
-				"isArchived": {
-					"type": "boolean"
-				}
-			},
-			"required": [
-				"isArchived"
-			],
-			"type": "object",
-			"additionalProperties": false
-		},
-		"UserPasswordUpdateParams": {
-			"properties": {
-				"password": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"password"
-			],
-			"type": "object",
-			"additionalProperties": false
-		},
-		"RoleCreationParams": {
-			"properties": {
-				"name": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"name"
-			],
-			"type": "object",
-			"additionalProperties": false
-		},
-		"RoleUpdateParams": {
-			"properties": {
-				"name": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"name"
-			],
-			"type": "object",
-			"additionalProperties": false
-		},
-		"RoleActiveParams": {
-			"properties": {
-				"isActive": {
-					"type": "boolean"
-				}
-			},
-			"required": [
-				"isActive"
-			],
-			"type": "object",
-			"additionalProperties": false
-		},
-		"RoleArchivedParams": {
-			"properties": {
-				"isArchived": {
-					"type": "boolean"
-				}
-			},
-			"required": [
-				"isArchived"
-			],
-			"type": "object",
-			"additionalProperties": false
+		"securitySchemes": {
+			"jwt": {
+				"type": "apiKey",
+				"name": "x-access-token",
+				"in": "header"
+			}
 		}
 	},
 	"info": {
@@ -160,138 +398,181 @@
 			"name": "KennetAvila28"
 		}
 	},
+	"openapi": "3.0.0",
 	"paths": {
 		"/auth": {
-			"get": {
-				"operationId": "Get",
-				"produces": [
-					"application/json"
-				],
+			"post": {
+				"operationId": "Post",
 				"responses": {
 					"200": {
-						"description": "Ok",
-						"schema": {
-							"type": "string"
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JWToken"
+								}
+							}
 						}
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"auth"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AuthParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users": {
 			"get": {
 				"operationId": "Get",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"200": {
 						"description": "Returns Users Collection",
-						"schema": {
-							"items": {
-								"additionalProperties": true
-							},
-							"type": "array"
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
 						}
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
 						"name": "names",
 						"required": false,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					},
 					{
 						"in": "query",
 						"name": "lastNames",
 						"required": false,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					},
 					{
 						"in": "query",
 						"name": "isActive",
 						"required": false,
-						"type": "boolean"
+						"schema": {
+							"type": "boolean"
+						}
 					}
 				]
 			},
 			"post": {
 				"operationId": "Post",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"201": {
-						"description": "Created",
-						"schema": {
-							"additionalProperties": true
-						}
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
-				"parameters": [
+				"security": [
 					{
-						"in": "body",
-						"name": "request",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/UserCreationParams"
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserCreationParams"
+							}
 						}
 					}
-				]
+				}
 			}
 		},
 		"/users/archived": {
 			"get": {
 				"operationId": "GetArchived",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"200": {
 						"description": "Returns Archived Users Collection",
-						"schema": {
-							"items": {
-								"additionalProperties": true
-							},
-							"type": "array"
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UserResponseModel"
+									},
+									"type": "array"
+								}
+							}
 						}
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
 						"name": "names",
 						"required": false,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					},
 					{
 						"in": "query",
 						"name": "lastNames",
 						"required": false,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					},
 					{
 						"in": "query",
 						"name": "isActive",
 						"required": false,
-						"type": "boolean"
+						"schema": {
+							"type": "boolean"
+						}
 					}
 				]
 			}
@@ -299,259 +580,307 @@
 		"/users/{id}": {
 			"get": {
 				"operationId": "GetById",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"200": {
 						"description": "Returns User who matches the id",
-						"schema": {
-							"additionalProperties": true
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseModel"
+								}
+							}
 						}
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					}
 				]
 			},
 			"put": {
 				"operationId": "Put",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"201": {
-						"description": "Updated",
-						"schema": {
-							"additionalProperties": true
-						}
+						"description": "Updated"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "user",
-						"required": true,
 						"schema": {
-							"$ref": "#/definitions/UserUpdateParams"
+							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserUpdateParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users/{id}/set-active": {
 			"patch": {
 				"operationId": "SetActiveUser",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
-					"201": {
-						"description": "User Change Active",
-						"schema": {
-							"additionalProperties": true
-						}
+					"204": {
+						"description": "User Change Active"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "active",
-						"required": true,
 						"schema": {
-							"$ref": "#/definitions/UserActiveParams"
+							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserActiveParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users/{id}/set-archived": {
 			"patch": {
 				"operationId": "SetArchivedUser",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
-					"201": {
-						"description": "User Change Archived",
-						"schema": {
-							"additionalProperties": true
-						}
+					"204": {
+						"description": "User Change Archived"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "archived",
-						"required": true,
 						"schema": {
-							"$ref": "#/definitions/UserArchivedParams"
+							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserArchivedParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users/{id}/change-password": {
 			"patch": {
 				"operationId": "ChangePassword",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
-					"201": {
-						"description": "Updated User Password",
-						"schema": {
-							"additionalProperties": true
-						}
+					"204": {
+						"description": "Updated User Password"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "passUser",
-						"required": true,
 						"schema": {
-							"$ref": "#/definitions/UserPasswordUpdateParams"
+							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserPasswordUpdateParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/roles": {
 			"get": {
 				"operationId": "Get",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"200": {
 						"description": "Returns Roles Collection",
-						"schema": {
-							"items": {
-								"additionalProperties": true
-							},
-							"type": "array"
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
 						}
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Roles"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
 						"name": "name",
 						"required": false,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					}
 				]
 			},
 			"post": {
 				"operationId": "Post",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"201": {
-						"description": "Created",
-						"schema": {
-							"additionalProperties": true
-						}
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Roles"
 				],
-				"security": [],
-				"parameters": [
+				"security": [
 					{
-						"in": "body",
-						"name": "request",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/RoleCreationParams"
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RoleCreationParams"
+							}
 						}
 					}
-				]
+				}
 			}
 		},
 		"/roles/archived": {
 			"get": {
 				"operationId": "GetArchived",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"200": {
 						"description": "Returns Archived Roles Collection",
-						"schema": {
-							"items": {
-								"additionalProperties": true
-							},
-							"type": "array"
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
 						}
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Roles"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "query",
 						"name": "name",
 						"required": false,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					}
 				]
 			}
@@ -559,142 +888,196 @@
 		"/roles/{id}": {
 			"get": {
 				"operationId": "GetById",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"200": {
 						"description": "Returns Role who matches the id",
-						"schema": {
-							"additionalProperties": true
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RoleResponseModel"
+								}
+							}
 						}
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Roles"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
+						"schema": {
+							"type": "string"
+						}
 					}
 				]
 			},
 			"put": {
 				"operationId": "Put",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
 					"201": {
-						"description": "Updated",
-						"schema": {
-							"additionalProperties": true
-						}
+						"description": "Updated"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Roles"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "role",
-						"required": true,
 						"schema": {
-							"$ref": "#/definitions/RoleUpdateParams"
+							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RoleUpdateParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/roles/{id}/set-active": {
 			"patch": {
 				"operationId": "SetActiveRole",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
-					"201": {
-						"description": "Role Change Active",
-						"schema": {
-							"additionalProperties": true
-						}
+					"204": {
+						"description": "Role Change Active"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Roles"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "active",
-						"required": true,
 						"schema": {
-							"$ref": "#/definitions/RoleActiveParams"
+							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RoleActiveParams"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/roles/{id}/set-archived": {
 			"patch": {
 				"operationId": "SetArchivedRole",
-				"produces": [
-					"application/json"
-				],
 				"responses": {
-					"201": {
-						"description": "Role Change Archived",
-						"schema": {
-							"additionalProperties": true
-						}
+					"204": {
+						"description": "Role Change Archived"
+					},
+					"401": {
+						"description": "Unathorized"
 					}
 				},
 				"tags": [
 					"Roles"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
 						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "archived",
-						"required": true,
 						"schema": {
-							"$ref": "#/definitions/RoleArchivedParams"
+							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RoleArchivedParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/permissions": {
+			"get": {
+				"operationId": "GetPermissions",
+				"responses": {
+					"200": {
+						"description": "Returns Permission Collection",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Permissions"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
 			}
 		}
 	},
-	"produces": [
-		"application/json"
-	],
-	"swagger": "2.0",
-	"securityDefinitions": {},
-	"host": "localhost:5000"
+	"servers": [
+		{
+			"url": "https://localhost:5000/api/v1"
+		}
+	]
 }

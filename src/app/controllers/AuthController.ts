@@ -3,8 +3,21 @@
  * @author Luis Palmas
  */
 
-import { Get, Route, Tags } from '@tsoa/runtime'
-import { injectable } from 'inversify'
+import {
+  Body,
+  Post,
+  Route,
+  SuccessResponse,
+  Tags,
+  Response,
+} from '@tsoa/runtime'
+import { inject, injectable } from 'inversify'
+import { AuthService } from '../../contexts/keliarAcademy/auth/application/AuthService'
+import {
+  AuthParams,
+  JWToken,
+} from '../../contexts/keliarAcademy/auth/domain/AuthTypes'
+import { TYPE } from '../ioc/Types'
 // import { UserService } from '../../contexts/khronox/users/application/UserService'
 // import { ProvideSingleton } from '../../ioc/ioc'
 // import { TYPE } from '../../ioc/Types'
@@ -14,11 +27,17 @@ import { injectable } from 'inversify'
 @injectable()
 // @ProvideSingleton(TYPE.Domain.Auth.Application.Controller)
 export class AuthController {
-  // @inject(TYPE.Domain.User.Application.Service)
-  // private userService: UserService | undefined
+  private authService: AuthService
+  constructor(
+    @inject(TYPE.Domain.Auth.Application.Service) authService: AuthService
+  ) {
+    this.authService = authService
+  }
 
-  @Get()
-  public async get() {
-    return 'empty';
+  @SuccessResponse('200', 'OK')
+  @Response('401', 'Unathorized')
+  @Post()
+  public async post(@Body() request: AuthParams): Promise<JWToken> {
+    return this.authService.login(request)
   }
 }

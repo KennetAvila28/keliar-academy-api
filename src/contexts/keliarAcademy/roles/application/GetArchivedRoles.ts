@@ -4,20 +4,22 @@
  */
 
 import { fold } from '../../../shared/core/Either'
-import { Role } from '../domain/Role'
-import { RoleFailure } from '../domain/RoleFailures'
 import { RoleFilterRequest } from '../domain/RoleFilterRequest'
 import { RoleRepository } from '../domain/RoleRepository'
+import { RoleResponseModel } from '../domain/RoleRequest'
 
 export class GetArchivedRoles {
-  static async run(filter: RoleFilterRequest, repository: RoleRepository): Promise<any[]> {
-    const result = await repository.getArchived(filter);
-    return fold<RoleFailure, Role[], any>(
+  static async run(
+    filter: RoleFilterRequest,
+    repository: RoleRepository
+  ): Promise<RoleResponseModel[]> {
+    const result = await repository.getArchived(filter)
+    return fold(
       result,
       (error) => {
-        throw new Error(error);
+        throw new Error(error)
       },
-      (role) => role.map((u) => u.toPrimitives())
-    );
+      (role) => role.map((r) => r.toPrimitives())
+    )
   }
 }

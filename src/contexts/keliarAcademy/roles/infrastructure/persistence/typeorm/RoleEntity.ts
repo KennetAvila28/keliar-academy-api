@@ -1,6 +1,4 @@
 import { EntitySchema } from 'typeorm'
-import { UniqueId } from '../../../../../shared/domain/valueobjects/UniqueId'
-import { TypeOrmTransformer } from '../../../../../shared/infrastructure/persistence/typeorm/TypeOrmTransformer'
 import { Role } from '../../../domain/Role'
 export const RoleEntity = new EntitySchema<Role>({
   name: 'Role',
@@ -10,24 +8,39 @@ export const RoleEntity = new EntitySchema<Role>({
     _id: {
       type: String,
       primary: true,
-      transformer: TypeOrmTransformer(UniqueId),
     },
-    name:{
+    name: {
       type: String,
-      length: 150
+      length: 150,
     },
     createdAt: {
       type: Date,
       nullable: true,
     },
-    isActive:{
-      type:Boolean,
-      default: true
+    isActive: {
+      type: Boolean,
+      default: true,
     },
-    isArchived:{
-      type:Boolean,
-      default: false
+    isArchived: {
+      type: Boolean,
+      default: false,
     },
   },
-
-});
+  relations: {
+    permissions: {
+      type: 'many-to-many',
+      target: 'Permission',
+      joinTable: {
+        name: 'rolesPermissions',
+        joinColumn: {
+          name: 'roleId',
+          referencedColumnName: '_id',
+        },
+        inverseJoinColumn: {
+          name: 'permissionId',
+          referencedColumnName: '_id',
+        },
+      },
+    },
+  },
+})

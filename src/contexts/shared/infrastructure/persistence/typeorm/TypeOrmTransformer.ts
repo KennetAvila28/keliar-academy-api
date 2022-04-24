@@ -10,5 +10,5 @@ export const TypeOrmTransformer = (
   return {
     to: (value: ValueObject<any>): any => value.get(),
     from: (value: any): ValueObject<any> => new ValueObjectClass(value),
-  };
-};
+  }
+}

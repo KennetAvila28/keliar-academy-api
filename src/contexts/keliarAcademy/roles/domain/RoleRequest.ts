@@ -1,22 +1,21 @@
+import { Permission } from '../../permissions/domain/Permission'
+
 /**
  *
  */
-
- export interface RoleResponseModel {
-  _id: string;
-  email: string;
- }
-
 export interface RoleCreationParams {
-  name: string;
+  name: string
+  permissions: Permission[]
 }
-
+export interface PermissionResponseModel {
+  _id: string
+  name: string
+  description: string
+  module: string
+}
 export interface RoleUpdateParams {
-  name: string;
-}
-
-export interface RolePasswordUpdateParams {
-  password: string
+  name: string
+  permissions: Permission[]
 }
 
 export interface RoleActiveParams {
@@ -27,3 +26,11 @@ export interface RoleArchivedParams {
   isArchived: boolean
 }
 
+export interface RoleResponseModel {
+  _id: string
+  name: string
+  isActive: boolean
+  isArchived: boolean
+  createdAt: Date
+  permissions: PermissionResponseModel[]
+}

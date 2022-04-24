@@ -1,5 +1,5 @@
 export interface UserFilterRequest {
-    names?: string,
-    lastNames?: string,
-    isActive?: boolean,
+  names?: string
+  lastNames?: string
+  isActive?: boolean
 }

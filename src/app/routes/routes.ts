@@ -8,6 +8,11 @@ import { AuthController } from './../controllers/AuthController';
 import { UserController } from './../controllers/UserController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { RoleController } from './../controllers/RoleController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PermissionsController } from './../controllers/PermissionsController';
+import { expressAuthentication } from './../authentication';
+// @ts-ignore - no great way to install types from subpackage
+const promiseAny = require('promise.any');
 import { iocContainer } from './../ioc/ioc';
 import { IocContainer, IocContainerFactory } from '@tsoa/runtime';
 import * as express from 'express';
@@ -15,6 +20,88 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "JWToken": {
+        "dataType": "refObject",
+        "properties": {
+            "token": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AuthParams": {
+        "dataType": "refObject",
+        "properties": {
+            "password": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PermissionResponseModel": {
+        "dataType": "refObject",
+        "properties": {
+            "_id": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "module": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "RoleResponseModel": {
+        "dataType": "refObject",
+        "properties": {
+            "_id": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "isActive": {"dataType":"boolean","required":true},
+            "isArchived": {"dataType":"boolean","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"PermissionResponseModel"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserResponseModel": {
+        "dataType": "refObject",
+        "properties": {
+            "_id": {"dataType":"string","required":true},
+            "names": {"dataType":"string","required":true},
+            "lastNames": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+            "photo": {"dataType":"string","required":true},
+            "phone": {"dataType":"string","required":true},
+            "isActive": {"dataType":"boolean","required":true},
+            "isArchived": {"dataType":"boolean","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "roles": {"dataType":"array","array":{"dataType":"refObject","ref":"RoleResponseModel"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Permission": {
+        "dataType": "refObject",
+        "properties": {
+            "_id": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "module": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Role": {
+        "dataType": "refObject",
+        "properties": {
+            "_id": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "isActive": {"dataType":"boolean","required":true},
+            "isArchived": {"dataType":"boolean","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"Permission"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserCreationParams": {
         "dataType": "refObject",
         "properties": {
@@ -24,6 +111,7 @@ const models: TsoaRoute.Models = {
             "email": {"dataType":"string","required":true},
             "password": {"dataType":"string","required":true},
             "photo": {"dataType":"string","required":true},
+            "roles": {"dataType":"array","array":{"dataType":"refObject","ref":"Role"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -36,6 +124,7 @@ const models: TsoaRoute.Models = {
             "phone": {"dataType":"string","required":true},
             "email": {"dataType":"string","required":true},
             "photo": {"dataType":"string","required":true},
+            "roles": {"dataType":"array","array":{"dataType":"refObject","ref":"Role"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -68,6 +157,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "name": {"dataType":"string","required":true},
+            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"Permission"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -76,6 +166,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "name": {"dataType":"string","required":true},
+            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"Permission"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -106,10 +197,11 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.get('/api/v1/auth',
+        app.post('/api/v1/auth',
 
-            async function AuthController_get(request: any, response: any, next: any) {
+            async function AuthController_post(request: any, response: any, next: any) {
             const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"AuthParams"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -126,7 +218,7 @@ export function RegisterRoutes(app: express.Router) {
                 }
 
 
-              const promise = controller.get.apply(controller, validatedArgs as any);
+              const promise = controller.post.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
@@ -134,6 +226,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/users',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_get(request: any, response: any, next: any) {
             const args = {
@@ -164,6 +257,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/users/archived',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_getArchived(request: any, response: any, next: any) {
             const args = {
@@ -194,6 +288,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/users/:id',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_getById(request: any, response: any, next: any) {
             const args = {
@@ -222,6 +317,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/users',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_post(request: any, response: any, next: any) {
             const args = {
@@ -250,6 +346,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/v1/users/:id',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_put(request: any, response: any, next: any) {
             const args = {
@@ -279,6 +376,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/v1/users/:id/set-active',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_setActiveUser(request: any, response: any, next: any) {
             const args = {
@@ -308,6 +406,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/v1/users/:id/set-archived',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_setArchivedUser(request: any, response: any, next: any) {
             const args = {
@@ -337,6 +436,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/v1/users/:id/change-password',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function UserController_changePassword(request: any, response: any, next: any) {
             const args = {
@@ -366,6 +466,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/roles',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function RoleController_get(request: any, response: any, next: any) {
             const args = {
@@ -394,6 +495,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/roles/archived',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function RoleController_getArchived(request: any, response: any, next: any) {
             const args = {
@@ -422,6 +524,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/roles/:id',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function RoleController_getById(request: any, response: any, next: any) {
             const args = {
@@ -450,6 +553,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/roles',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function RoleController_post(request: any, response: any, next: any) {
             const args = {
@@ -478,6 +582,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/v1/roles/:id',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function RoleController_put(request: any, response: any, next: any) {
             const args = {
@@ -507,6 +612,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/v1/roles/:id/set-active',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function RoleController_setActiveRole(request: any, response: any, next: any) {
             const args = {
@@ -536,6 +642,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/api/v1/roles/:id/set-archived',
+            authenticateMiddleware([{"jwt":[]}]),
 
             async function RoleController_setArchivedRole(request: any, response: any, next: any) {
             const args = {
@@ -564,9 +671,96 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/permissions',
+            authenticateMiddleware([{"jwt":[]}]),
+
+            async function PermissionsController_getPermissions(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+                const controller: any = await container.get<PermissionsController>(PermissionsController);
+                if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+                }
+
+
+              const promise = controller.getPermissions.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
+
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+    function authenticateMiddleware(security: TsoaRoute.Security[] = []) {
+        return async function runAuthenticationMiddleware(request: any, _response: any, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            // keep track of failed auth attempts so we can hand back the most
+            // recent one.  This behavior was previously existing so preserving it
+            // here
+            const failedAttempts: any[] = [];
+            const pushAndRethrow = (error: any) => {
+                failedAttempts.push(error);
+                throw error;
+            };
+
+            const secMethodOrPromises: Promise<any>[] = [];
+            for (const secMethod of security) {
+                if (Object.keys(secMethod).length > 1) {
+                    const secMethodAndPromises: Promise<any>[] = [];
+
+                    for (const name in secMethod) {
+                        secMethodAndPromises.push(
+                            expressAuthentication(request, name, secMethod[name])
+                                .catch(pushAndRethrow)
+                        );
+                    }
+
+                    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+                    secMethodOrPromises.push(Promise.all(secMethodAndPromises)
+                        .then(users => { return users[0]; }));
+                } else {
+                    for (const name in secMethod) {
+                        secMethodOrPromises.push(
+                            expressAuthentication(request, name, secMethod[name])
+                                .catch(pushAndRethrow)
+                        );
+                    }
+                }
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            try {
+                request['user'] = await promiseAny(secMethodOrPromises);
+                next();
+            }
+            catch(err) {
+                // Show most recent error as response
+                const error = failedAttempts.pop();
+                error.status = error.status || 401;
+                next(error);
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        }
+    }
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 

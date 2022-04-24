@@ -6,13 +6,21 @@
     "entryFile": "./src/app/routes",
     "host": "localhost:5000",
     "basePath": "/api/v1",
-    "specVersion": 2
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+          "type": "apiKey",
+          "name": "x-access-token",
+          "in": "header"
+      }
+    }
   },
   "routes": {
     "entryFile": "./src/app/controllers/index.ts",
     "routesDir": "./src/app/routes",
     "basePath": "/api/v1",
     "middleware": "express",
-    "iocModule": "./src/app/ioc/ioc"
+    "iocModule": "./src/app/ioc/ioc",
+    "authenticationModule": "./src/app/authentication.ts"
   }
 }

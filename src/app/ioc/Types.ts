@@ -29,7 +29,13 @@ export const TYPE = {
       },
       Repository: Symbol('RoleRepository'),
     },
-
+    Permission: {
+      Application: {
+        Service: Symbol('PermissionService'),
+        Controller: Symbol('PermissionsController'),
+      },
+      Repository: Symbol('PermissionRepository'),
+    },
   },
   Services: {},
 }

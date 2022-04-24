@@ -13,13 +13,14 @@ import cors from 'cors'
 
 import './controllers/'
 import { RegisterRoutes } from './routes/routes'
+import helmet from 'helmet'
 /**
  * @description Server class for initialize a webserver
  */
 export class Server {
-  readonly port: string;
-  readonly env: string;
-  private readonly app: express.Express;
+  readonly port: string
+  readonly env: string
+  private readonly app: express.Express
 
   /**
    *
@@ -27,11 +28,11 @@ export class Server {
    * @param env - Enviroment of the server (default: 'dev')
    */
   constructor(port: string, env?: string) {
-    this.app = express();
-    this.port = port;
-    this.env = env || 'dev';
-    this.initializeMiddlewares();
-    this.initializeRouter();
+    this.app = express()
+    this.port = port
+    this.env = env || 'dev'
+    this.initializeMiddlewares()
+    this.initializeRouter()
   }
 
   /**
@@ -41,30 +42,33 @@ export class Server {
     this.app.listen(this.port, () => {
       console.log(
         `App is running at http://localhost:${this.port} in ${this.env} mode`
-      );
-    });
+      )
+    })
   }
 
   /**
    * Initalize use of the middleware on the application
    */
   private initializeMiddlewares(): void {
-    this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app
+      .use(bodyParser.json())
+      .use(bodyParser.urlencoded({ extended: false }))
+      .use(helmet())
+
     // this.app.use(helmet.xssFilter)
     // this.app.use(helmet.noSniff)
     // this.app.use(helmet.hidePoweredBy)
     // this.app.use(helmet.frameguard({ action: 'DENY' }))
-    this.app.use(cors());
-
+    this.app.use(cors())
     if (this.env === 'dev') {
-      this.app.use(morgan<Request, Response>('dev'));
-      const swaggerDocument = require('../../build/swagger.json');
+      this.app.use(morgan<Request, Response>('dev'))
+      const swaggerDocument = require('../../build/swagger.json')
+      swaggerDocument.servers[0].url = `http://localhost:${this.port}/api/v1`
       this.app.use(
         '/api/docs',
         swaggerUi.serve,
         swaggerUi.setup(swaggerDocument)
-      );
+      )
     }
   }
 
@@ -72,23 +76,47 @@ export class Server {
    * Allow to initialize router in case of use routes
    */
   private initializeRouter(): void {
-    RegisterRoutes(this.app);
+    RegisterRoutes(this.app)
 
-    this.app.use((_req, res: Response) => {
-      res.status(404).send({
-        message: 'Not Found',
-      });
-    });
+    this.app
+      .use((_req, res: Response) => {
+        res.status(404).send({
+          message: 'Not Found',
+        })
+      })
+      .use((_req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*')
+        res.header(
+          'Access-Control-Allow-Headers',
+          `Origin, X-Requested-With, Content-Type, Accept, Authorization`
+        )
 
-    this.app.use(
-      (err: unknown, req: Request, res: Response, next: NextFunction) => {
+        next()
+      })
+      .use((err: unknown, req: Request, res: Response, next: NextFunction) => {
         if (err instanceof Error) {
+          console.error(err)
           return res.status(500).json({
-            code: err.message,
+            code: err.message ?? err.name,
             message: 'Internal Server Error',
-          });
+          })
         }
-      }
-    );
+        //TODO: move this interface to a separate file
+        interface ErrorCodeNumber {
+          status?: number
+        }
+        const errorNumber = err as ErrorCodeNumber
+        if (errorNumber.status) {
+          if (errorNumber.status === 401)
+            return res.status(errorNumber.status).json({
+              code: 'Auth is required',
+              message: 'Unauthorized',
+            })
+          return res.status(errorNumber.status).json({
+            code: errorNumber.status,
+            message: 'Error in console',
+          })
+        }
+      })
   }
 }
