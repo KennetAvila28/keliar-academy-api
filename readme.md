@@ -2,7 +2,7 @@
 
 A educative plaform with whatsapp and emaill notifications.
 
-[![build master](https://github.com/KennetAvila28/keliar_academy_api/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/KennetAvila28/keliar_academy_api/actions/workflows/build.yml)
+[![build master](https://github.com/KennetAvila28/keliar-academy-api/actions/workflows/build.yml/badge.svg)](https://github.com/KennetAvila28/keliar-academy-api/actions/workflows/build.yml)
 
 # Changelog
 
