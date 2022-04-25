@@ -1,15 +1,15 @@
 import { fold, getOrElse } from '../../../shared/core/Either'
-import { UserRepository } from '../../users/domain/UserRepository'
+import { StudentRepository } from '../../students/domain/StudentRepository'
 import { AuthParams, JWToken } from '../domain/AuthTypes'
 import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 const secret = process.env.JWT_SECRET || 'my@#$secret'
-export class GetAccessToken {
+export class GetAccessTokenStudents {
   static async run(
     auth: AuthParams,
-    userRepository: UserRepository
+    studentRepository: StudentRepository
   ): Promise<JWToken> {
-    const result = await userRepository.searchByEmail(auth.email)
+    const result = await studentRepository.searchByEmail(auth.email)
 
     const _user = getOrElse(result, (err) => {
       throw new Error(err)
@@ -24,7 +24,7 @@ export class GetAccessToken {
           first_name: _user.names,
           last_name: _user.lastNames,
           email: _user.email,
-          roles: _user.roles,
+          class: _user.classes,
         },
         secret,
         { expiresIn: '24h' }

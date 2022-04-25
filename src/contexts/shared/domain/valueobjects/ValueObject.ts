@@ -1,6 +1,6 @@
 /**
  * @description Base inmutable object class
- * @author Luis Palma
+ * @author Kennet Avila
  */
 
 import { Either, getOrElse, isRight } from '../../core/Either'

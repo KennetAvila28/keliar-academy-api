@@ -1,0 +1,12 @@
+/**
+ *
+ */
+
+export type StudentFailure =
+  | 'EMAIL_ALREADY_EXIST'
+  | 'STUDENT_NOT_FOUND'
+  | 'INCORRECT_CREDENTIALS'
+  | 'INVALID_USER_ID'
+  | 'INVALID_PASSWORD'
+  | 'INVALID_EMAIL'
+  | 'UNEXPECTED_ERROR'

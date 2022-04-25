@@ -377,6 +377,411 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"StudentResponseModelWithOutClass": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"_id",
+					"names",
+					"lastNames",
+					"email",
+					"photo",
+					"phone",
+					"isActive",
+					"isArchived",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ClassResponseModel": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"students": {
+						"items": {
+							"$ref": "#/components/schemas/StudentResponseModelWithOutClass"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"isActive",
+					"isArchived",
+					"createdAt",
+					"students"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ClassCreationParams": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ClassUpdateParams": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ClassArchivedParams": {
+				"properties": {
+					"isArchived": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"isArchived"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ClassResponseModelWithOutStudents": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"isActive",
+					"isArchived",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StudentResponseModel": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"classes": {
+						"items": {
+							"$ref": "#/components/schemas/ClassResponseModelWithOutStudents"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"names",
+					"lastNames",
+					"email",
+					"photo",
+					"phone",
+					"isActive",
+					"isArchived",
+					"createdAt",
+					"classes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Class": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"students": {
+						"items": {
+							"$ref": "#/components/schemas/Student"
+						},
+						"type": "array"
+					},
+					"tasks": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"isActive",
+					"isArchived",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Student": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"isActive": {
+						"type": "boolean"
+					},
+					"isArchived": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"classes": {
+						"items": {
+							"$ref": "#/components/schemas/Class"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"email",
+					"password",
+					"names",
+					"lastNames",
+					"phone",
+					"photo",
+					"isActive",
+					"isArchived",
+					"createdAt",
+					"classes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StudentCreationParams": {
+				"properties": {
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"Classes": {
+						"items": {
+							"$ref": "#/components/schemas/Class"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"names",
+					"lastNames",
+					"phone",
+					"email",
+					"password",
+					"photo",
+					"Classes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StudentUpdateParams": {
+				"properties": {
+					"names": {
+						"type": "string"
+					},
+					"lastNames": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					},
+					"Classes": {
+						"items": {
+							"$ref": "#/components/schemas/Class"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"names",
+					"lastNames",
+					"phone",
+					"email",
+					"photo",
+					"Classes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StudentActiveParams": {
+				"properties": {
+					"isActive": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"isActive"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StudentArchivedParams": {
+				"properties": {
+					"isArchived": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"isArchived"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StudentPasswordUpdateParams": {
+				"properties": {
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -389,7 +794,7 @@
 	},
 	"info": {
 		"title": "keliar_academy_api",
-		"version": "1.0.0",
+		"version": "2.0.0",
 		"description": "backend services to keliar academy",
 		"license": {
 			"name": "ISC"
@@ -403,6 +808,41 @@
 		"/auth": {
 			"post": {
 				"operationId": "Post",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JWToken"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AuthParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/students": {
+			"post": {
+				"operationId": "PostStudent",
 				"responses": {
 					"200": {
 						"description": "OK",
@@ -1072,6 +1512,517 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/classes": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Returns Classs Collection",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "Post",
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ClassCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/classes/archived": {
+			"get": {
+				"operationId": "GetArchived",
+				"responses": {
+					"200": {
+						"description": "Returns Archived Classs Collection",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/classes/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Returns Class who matches the id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ClassResponseModel"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Put",
+				"responses": {
+					"201": {
+						"description": "Updated"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ClassUpdateParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/classes/{id}/set-archived": {
+			"patch": {
+				"operationId": "SetArchivedClass",
+				"responses": {
+					"204": {
+						"description": "Class Change Archived"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ClassArchivedParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/students": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Returns Students Collection",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Students"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "names",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "lastNames",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "isActive",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "Post",
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Students"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StudentCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/students/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Returns Student who matches the id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StudentResponseModel"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Students"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Put",
+				"responses": {
+					"201": {
+						"description": "Updated"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Students"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StudentUpdateParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/students/{id}/set-active": {
+			"patch": {
+				"operationId": "SetActiveStudent",
+				"responses": {
+					"204": {
+						"description": "Student Change Active"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Students"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StudentActiveParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/students/{id}/set-archived": {
+			"patch": {
+				"operationId": "SetArchivedStudent",
+				"responses": {
+					"204": {
+						"description": "Student Change Archived"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Students"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StudentArchivedParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/students/{id}/change-password": {
+			"patch": {
+				"operationId": "ChangePassword",
+				"responses": {
+					"204": {
+						"description": "Updated Student Password"
+					},
+					"401": {
+						"description": "Unathorized"
+					}
+				},
+				"tags": [
+					"Students"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StudentPasswordUpdateParams"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

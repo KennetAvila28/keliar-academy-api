@@ -1,6 +1,6 @@
 /**
  * @description Auth Controller to manage api authentication
- * @author Luis Palmas
+ * @author Kennet Avilas
  */
 
 import {
@@ -39,5 +39,12 @@ export class AuthController {
   @Post()
   public async post(@Body() request: AuthParams): Promise<JWToken> {
     return this.authService.login(request)
+  }
+
+  @SuccessResponse('200', 'OK')
+  @Response('401', 'Unathorized')
+  @Post('/students')
+  public async postStudent(@Body() request: AuthParams): Promise<JWToken> {
+    return this.authService.loginStudent(request)
   }
 }

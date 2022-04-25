@@ -36,6 +36,20 @@ export const TYPE = {
       },
       Repository: Symbol('PermissionRepository'),
     },
+    Class: {
+      Application: {
+        Service: Symbol('ClassService'),
+        Controller: Symbol('ClassController'),
+      },
+      Repository: Symbol('ClassRepository'),
+    },
+    Student: {
+      Application: {
+        Service: Symbol('StudentService'),
+        Controller: Symbol('StudentsController'),
+      },
+      Repository: Symbol('StudentRepository'),
+    },
   },
   Services: {},
 }
